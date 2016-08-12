@@ -1,6 +1,6 @@
 <h1>This is where a teaher adds new students.</h1>
 
-<% if @student.errors.any? %>
+<% if @student.errors.any? || @parent.errors.any? %>
   <div>
     <strong>Some issues with your entry, please fix them:</strong>
     <ul>
@@ -8,10 +8,16 @@
         <li><%= error %></li>
       <% end %>
     </ul>
+    <ul>
+      <% @parent.errors.full_messages.each do |error| %>
+        <li><%= error %></li>
+      <% end %>
+    </ul>
   </div>
 <% end %>
 
 <form method="post" action="/teacher/students">
+  Student Information
   <div>
     <label>Student Name:</label>
     <input type="text" name="name" value="<%= @student.name %>">
@@ -23,6 +29,19 @@
   <div>
     <label>Password:</label>
     <input type="text" name="password" value="<%= @student.password %>">
+  </div>
+  Parent Information
+  <div>
+    <label>Parent Name:</label>
+    <input type="text" name="p_name" value="<%= @parent.name %>">
+  </div>
+  <div>
+    <label>Parent Username:</label>
+    <input type="text" name="p_username" value="<%= @parent.username %>">
+  </div>
+  <div>
+    <label>Parent Password:</label>
+    <input type="text" name="p_password" value="<%= @parent.password %>">
   </div>
   <div>
     <input type="submit" value="Create" >

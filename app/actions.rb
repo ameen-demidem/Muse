@@ -35,6 +35,7 @@ end
 
 get '/teacher/students/new' do
   @student = User.new
+  @parent = User.new
   erb :'teacher/new_student'
 end
 
@@ -122,7 +123,14 @@ post '/teacher/students' do
     role: "S",
     teacher_id: current_user.id
   )
-  if @student.save
+  @parent = User.new(
+    name: params[:p_name],
+    username: params[:p_username],
+    password: params[:p_password],
+    role: "P",
+    student_id: @student.id
+  )
+  if @student.save && @parent.save
     redirect '/teacher/students'
   else
     erb :'/teacher/new_student'

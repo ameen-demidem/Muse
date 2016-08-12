@@ -6,6 +6,7 @@ class CreateUsersHomeworksTasksComments < ActiveRecord::Migration
       t.string :password_digest
       t.string :role, limit: 1
       t.references :teacher, index: true
+      t.references :student, index: true
     end
 
     create_table :homeworks do |t|
