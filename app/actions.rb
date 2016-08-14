@@ -85,6 +85,13 @@ get '/student/homework/:id' do
   erb :'student/show_homework'
 end
 
+# gets for parent
+
+get '/parent' do
+  # @student = User.find params[:id]
+  erb :'parent/index'
+end
+
 # ----------- posts
 
 post '/login' do
@@ -93,7 +100,13 @@ post '/login' do
   if user
     session.delete(:error)
     session[:current_user] = user.id
-    user.role == 'T' ? redirect('/teacher/students'): redirect('/student')
+    if user.role == 'T'
+      redirect('/teacher/students')
+    elsif user.role == 'S'
+      redirect('/student')
+    else
+      redirect('/parent')
+    end
   else
     session.delete(:current_user)
     session[:error] = "Wrong username or password!"
